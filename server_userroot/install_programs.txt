@@ -1,0 +1,10 @@
+autoconf
+automake
+fontforge
+freetype
+imagemagick
+libspiro
+libtool
+m4
+potrace
+python

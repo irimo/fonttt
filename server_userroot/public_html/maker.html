@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>IRIDIGARDEN > フォントメーカー</title>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+<link href="maker.css" rel="stylesheet" type="text/css">
+
+<script src="./js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript">
+<!--
+// font maker js
+$(function() {
+
+  // 選択 & 画像差し込み
+  function changeEvent(evt){
+  console.log(evt);
+    var val = evt.data.val;
+    var files = evt.target.files; // FileList object
+
+    var f = files[0];
+    // Only process image files.
+    if (f.type && f.type.match('image.*')) {
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+        // Render thumbnail.
+          var span = '<img class="thumb" src="' + e.target.result + 
+                            '" title="' + escape(theFile.name) + '"/>';
+          $('#list-'+val).html(span);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+  function eraseEvent(evt) {
+    var val = evt.data.val;
+    var form = '<input type="file" id="'+val+'" name="file-'+val+'"/>';
+    $("#"+val).replaceWith(form);
+    $("#list-"+val).html("");
+    $("#"+val).on("change", {"val": val}, changeEvent);
+  }
+  
+  var files_name = [
+    "u0041", "u0042", "u0043", "u0044", "u0045", "u0046", "u0047", "u0048", "u0049", "u004a", "u004b", "u004c",  "u004d", "u004e", "u004f",
+    "u0050", "u0051", "u0052", "u0053", "u0054", "u0055", "u0056", "u0057", "u0058", "u0059", "u005a",
+    
+    "u0061", "u0062", "u0063", "u0064", "u0065", "u0066", "u0067", "u0068", "u0069", "u006a", "u006b", "u006c", "u006d", "u006e", "u006f",
+    "u0070", "u0071", "u0072", "u0073", "u0074", "u0075", "u0076", "u0077", "u0078", "u0079", "u007a",
+
+    "u0030", "u0031", "u0032", "u0033", "u0034", "u0035", "u0036", "u0037", "u0038", "u0039",
+    
+    "u30a2", "u30a4",
+    "u30f6",  
+    ];
+  // ボタンにbind
+  $.each(files_name, function(i, val) {
+    $("#"+val).on("change", {"val": val}, changeEvent);
+    $("#erase-"+val).on("click", {"val": val}, eraseEvent);
+  });
+  
+  
+// トグル
+var types = ["alphabet_up", "alphabet_down", "num", "hiragana", "katakana", "full_mark", "half_mark"];
+$.each(types, function(i, type){
+  $("#btn-"+type+"_true").click(function() {
+    $("#list-"+type).slideDown("fast");
+  });
+  $("#btn-"+type+"_false").click(function() {
+    $("#list-"+type).slideUp();
+  });
+});
+});
+$(function(){
+    $(window).on('beforeunload', function() {
+        return 'ページを移動します。';
+    });
+    $("input[type=submit]").click(function() {
+        $(window).off('beforeunload');
+    });
+});
+function showLightBox(){
+  $box = 
+}
+//-->
+</script>
+</head>
+
+<body id="bodystyle">
+<div id="soto">
+  <div class="di-menu-mini">
+  <ul>
+    <li><a href="http://ameblo.jp/iridigarden/">ブログ</a></li>
+    <li><a href="mail.html">メール</a></li>
+    <li><a href="link.html">リンク</a></li>
+      　<div class="divclr"></div>
+  </ul>
+  </div>
+    <h1 id="photo_over">
+変わったフォントをフリーでゲッツ＆オリジナルフォントを作ろう　イリディガーデン
+    </h1>
+<div id="honbun">
+  <div id="cont_title">
+  <div class="front_title">
+  <ul>
+  <li class="mini"><img src="images/arrow_silver.gif" width="11" height="12" align="top" class="second_yajirusi"></li>
+  <li class="mini"><a href="index.html">Font一覧</a></li>
+  <li class="mini">　*　</li>
+  <li class="actv">フォントメーカー</li>
+  <li class="mini">　*　</li>
+  <li class="mini"><a href="font_kiyaku.html">利用規約</a></li>
+  <li class="mini">　*　</li>
+  <li class="mini"><a href="font_inst.html">インストール方法</a></li>
+  <div class="divclr"></div>
+  </ul>
+   </div>
+</div>
+
+<div id="cont_include">
+    <h2><img src="./images/maker/maker-title.png" alt="フォントメーカー" /></h2>
+あなたのオリジナルのフォントが作れます。<br />
+アルファベット等が描かれた画像から生成可能！<br />
+<br />
+登録不要、利用無料。ぜひ、試してみませんか？<br />
+<hr />
+	<form enctype="multipart/form-data" method="POST" action="./make.php">
+    <h3>STEP1:基本情報</h3>
+    まず、基本情報を入力してください。<br />
+<table widivh="451" class="di-table di-letters-list">
+    <tr><td>ファイル名<br /><small>※英数字,_,-がOK</small><br /><small>(作成後変更可)</small></td><td><input type="text"  name="filename">.ttf</td></tr>
+    <tr><td>フォント名(英数字)</td><td><input type="text" name="fontname_e"/></td></tr>
+    <tr><td>フォント名(日本語)<br /><small>※英数字でもOK</small></td><td><input type="text"  name="fontname_j" /></td></tr>
+    <tr><td>作者名</td><td><input type="text" name="authorname" /></td></tr>
+</table>
+<hr />
+    <h3>STEP2:画像を用意</h3>
+    次に、ペイントソフトなどで、一文字ずつ画像を用意しましょう。<br />
+    自分のコンピューターに保存します。<br />
+    Illustratorで書いたものも、jpg,gif,pngに変換してください。<br />
+    モノクロ推奨(<a href="http://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%B3%E3%83%81%E3%82%A8%E3%82%A4%E3%83%AA%E3%82%A2%E3%82%B9">アンチエイリアス</a>はOK)。<br />
+    ※ファイル名は、全部違うものにしてください。<br />
+<hr />
+
+    <h3>STEP3:フォントデータ指定</h3>
+   下のフォームに画像を指定しましょう。『選択』をクリックして、画像を指定してください。プレビューが表示されます。<br />
+※ 指定しないと、その文字は空白になります。<br />
+※『選択』ボタンにドラック&ドロップしても指定されます。
+<div>
+<h4 class="di-letter_caption">Alphabet (大文字)
+ <input type="button" value="作る"  class="di-make-true" id="btn-alphabet_up_true"/>
+  <input type="button" value="作らない" class="di-make-false" id="btn-alphabet_up_false" />
+</h4>
+
+<div id="list-alphabet_up" class="di-letters-list">
+
+<div class="di-letter-wrap">
+  <div class="di-letter">A</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0041" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0041" name="file-u0041"/></div><br />
+      <div class="file" id="erase-u0041">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">B</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0042" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0042" name="file-u0042"/></div><br />
+      <div class="file" id="erase-u0042">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">C</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0043" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0043" name="file-u0043"/></div><br />
+      <div class="file" id="erase-u0043">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">D</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0044" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0044" name="file-u0044"/></div><br />
+      <div class="file" id="erase-u0044">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">E</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0045" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0045" name="file-u0045"/></div><br />
+      <div class="file" id="erase-u0045">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">F</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0046" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0046" name="file-u0046"/></div><br />
+      <div class="file" id="erase-u0046">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">G</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0047" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0047" name="file-u0047"/></div><br />
+      <div class="file" id="erase-u0047">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">H</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0048" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0048" name="file-u0048"/></div><br />
+      <div class="file" id="erase-u0048">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">I</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0049" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0049" name="file-u0049"/></div><br />
+      <div class="file" id="erase-u0049">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">J</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004a" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004a" name="file-u004a"/></div><br />
+      <div class="file" id="erase-u004a">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">K</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004b" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004b" name="file-u004b"/></div><br />
+      <div class="file" id="erase-u004b">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">L</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004c" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004c" name="file-u004c"/></div><br />
+      <div class="file" id="erase-u004c">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">M</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004d" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004d" name="file-u004d"/></div><br />
+      <div class="file" id="erase-u004d">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">N</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004e" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004e" name="file-u004e"/></div><br />
+      <div class="file" id="erase-u004e">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">O</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u004f" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u004f" name="file-u004f"/></div><br />
+      <div class="file" id="erase-u004f">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">P</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0050" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0050" name="file-u0050"/></div><br />
+      <div class="file" id="erase-u0050">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">Q</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0051" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0051" name="file-u0051"/></div><br />
+      <div class="file" id="erase-u0051">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">R</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0052" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0052" name="file-u0052"/></div><br />
+      <div class="file" id="erase-u0052">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">S</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0053" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0053" name="file-u0053"/></div><br />
+      <div class="file" id="erase-u0053">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">T</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0054" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0054" name="file-u0054"/></div><br />
+      <div class="file" id="erase-u0054">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">U</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0055" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0055" name="file-u0055"/></div><br />
+      <div class="file" id="erase-u0055">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">V</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0056" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0056" name="file-u0056"/></div><br />
+      <div class="file" id="erase-u0056">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">W</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0057" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0057" name="file-u0057"/></div><br />
+      <div class="file" id="erase-u0057">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">X</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0058" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0058" name="file-u0058"/></div><br />
+      <div class="file" id="erase-u0058">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">Y</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0059" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0059" name="file-u0059"/></div><br />
+      <div class="file" id="erase-u0059">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">Z</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u005a" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u005a" name="file-u005a"/></div><br />
+      <div class="file" id="erase-u005a">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+    <div class="clearfix"></div>
+</div>
+
+<h4 class="di-letter_caption">Alphabet (小文字)
+ <input type="button" value="作る"  class="di-make-true" id="btn-alphabet_down_true"/>
+  <input type="button" value="作らない" class="di-make-false"  id="btn-alphabet_down_false"/>
+</h4>
+<div id="list-alphabet_down" class="di-letters-list">
+<div class="di-letter-wrap">
+  <div class="di-letter">a</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0061" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0061" name="file-u0061"/></div><br />
+      <div class="file" id="erase-u0061">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">b</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0062" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0062" name="file-u0062"/></div><br />
+      <div class="file" id="erase-u0062">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">c</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0063" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0063" name="file-u0063"/></div><br />
+      <div class="file" id="erase-u0063">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">d</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0064" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0064" name="file-u0064"/></div><br />
+      <div class="file" id="erase-u0064">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">e</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0065" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0065" name="file-u0065"/></div><br />
+      <div class="file" id="erase-u0065">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">f</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0066" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0066" name="file-u0066"/></div><br />
+      <div class="file" id="erase-u0066">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">g</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0067" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0067" name="file-u0067"/></div><br />
+      <div class="file" id="erase-u0067">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">h</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0068" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0068" name="file-u0068"/></div><br />
+      <div class="file" id="erase-u0068">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">i</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0069" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0069" name="file-u0069"/></div><br />
+      <div class="file" id="erase-u0069">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">j</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006a" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006a" name="file-u006a"/></div><br />
+      <div class="file" id="erase-u006a">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">k</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006b" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006b" name="file-u006b"/></div><br />
+      <div class="file" id="erase-u006b">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">l</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006c" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006c" name="file-u006c"/></div><br />
+      <div class="file" id="erase-u006c">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">m</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006d" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006d" name="file-u006d"/></div><br />
+      <div class="file" id="erase-u006d">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">n</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006e" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006e" name="file-u006e"/></div><br />
+      <div class="file" id="erase-u006e">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">o</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u006f" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u006f" name="file-u006f"/></div><br />
+      <div class="file" id="erase-u006f">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">p</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0070" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0070" name="file-u0070"/></div><br />
+      <div class="file" id="erase-u0070">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">q</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0071" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0071" name="file-u0071"/></div><br />
+      <div class="file" id="erase-u0071">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">r</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0072" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0072" name="file-u0072"/></div><br />
+      <div class="file" id="erase-u0072">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">s</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0073" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0073" name="file-u0073"/></div><br />
+      <div class="file" id="erase-u0073">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">t</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0074" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0074" name="file-u0074"/></div><br />
+      <div class="file" id="erase-u0074">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">u</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0075" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0075" name="file-u0075"/></div><br />
+      <div class="file" id="erase-u0075">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">v</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0076" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0076" name="file-u0076"/></div><br />
+      <div class="file" id="erase-u0076">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">w</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0077" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0077" name="file-u0077"/></div><br />
+      <div class="file" id="erase-u0077">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">x</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0078" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0078" name="file-u0078"/></div><br />
+      <div class="file" id="erase-u0078">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">y</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0079" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0079" name="file-u0079"/></div><br />
+      <div class="file" id="erase-u0079">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">z</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u007a" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u007a" name="file-u007a"/></div><br />
+      <div class="file" id="erase-u007a">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+    <div class="clearfix"></div>
+    
+</div>
+
+<h4 class="di-letter_caption">数字
+ <input type="button" value="作る"  class="di-make-true" id="btn-num_true"/>
+  <input type="button" value="作らない" class="di-make-false" id="btn-num_false" />
+</h4>
+<div id="list-num" class="di-letters-list">
+
+<div class="di-letter-wrap">
+  <div class="di-letter">0</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0030" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0030" name="file-u0030"/></div><br />
+      <div class="file" id="erase-u0030">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">1</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0031" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0031" name="file-u0031"/></div><br />
+      <div class="file" id="erase-u0031">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">2</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0032" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0032" name="file-u0032"/></div><br />
+      <div class="file" id="erase-u0032">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">3</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0033" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0033" name="file-u0033"/></div><br />
+      <div class="file" id="erase-u0033">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">4</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0034" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0034" name="file-u0034"/></div><br />
+      <div class="file" id="erase-u0034">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">5</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0035" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0035" name="file-u0035"/></div><br />
+      <div class="file" id="erase-u0035">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">6</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0036" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0036" name="file-u0036"/></div><br />
+      <div class="file" id="erase-u0036">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">7</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0037" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0037" name="file-u0037"/></div><br />
+      <div class="file" id="erase-u0037">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">8</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0038" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0038" name="file-u0038"/></div><br />
+      <div class="file" id="erase-u0038">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="di-letter-wrap">
+  <div class="di-letter">9</div>
+  <div class="di-letter-cont-wrap">
+    <output id="list-u0039" class="di-letter-preview"></output>
+    <div class="di-letter-buttons">
+      <div class="file">選択<input type="file" id="u0039" name="file-u0039"/></div><br />
+      <div class="file" id="erase-u0039">消去</div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+    <div class="clearfix"></div>
+
+</div>
+
+<hr />
+
+<h3>STEP4:フォントファイル作成</h3>
+漏れ・間違いはありませんか？<br />
+OKだったら、いよいよ仕上げです！<br />
+<br />
+<a href="javascript:submit();" class="css_btn_class">フォントを作成する！</a>
+</font>
+<hr />
+<h3>STEP5:インストール、確認</h3>
+作成が完了したら、インストールして、確認しましょう。<br />
+<a href="font_inst.html">フォントのインストール方法はこちら</a><br />
+<br />
+満足のいくフォントができましたか？<br />
+<ul>
+<li>あなたのサイトでフォントファイルの配布が可能です。<a href="mail.html">連絡(任意)</a>をいただけたら、管理人が今後頑張る糧になります。また、<a href="link.html">IRIDIGARDENにリンク</a>を張ってください。</li>
+<li>無償配布は報告が無くてもOKです。</li>
+<li>有償配布の場合は、<a href="mail.html">連絡(必須)</a>をいただければ、無料でお使いいただけます。</li>
+</ul>
+バグ報告、こうしたらもっと使いやすくなるなど、<a href="mail.html">ご意見</a>をお気軽にもらえたらウレシイな♪<br />
+<br />
+<h3>使ってくれてありがとう！</h3>
+<a href="index.html">トップページへ</a>
+<br />
+<br />
+<div id="cr">
+Copyright(C) Iridigarden 2007-2013 all rights reserved.<br>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</body>
+</html>

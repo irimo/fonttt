@@ -1,0 +1,285 @@
+/* テンプレ(全部共通) */
+html,body{
+    scrollbar-base-color: #FFFFCC;
+    scrollbar-track-color: #FFFFFF;
+    scrollbar-face-color: #F9E7DA;
+    scrollbar-shadow-color: #AD581E  ;
+    scrollbar-darkshadow-color: #D8A17B;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-3dlight-color: #F9E7DC;
+    scrollbar-arrow-color: #E03838;
+	text-align:center;
+	margin:4px auto 0px 100px;
+	background-color:#FFFFFF;
+}
+
+#bodystyle{
+	text-align: center;
+
+}
+
+#photo_over{
+	marign:0px;
+	font-size: x-small;
+	color: #FF6666;
+	padding: 110px 0px 50px 0px;
+}
+
+#soto{
+	border:1px dashed #999999;
+	background-attachment:scroll;
+	background-color:#FFFFFF;
+	background-position:right top;
+	background-repeat:no-repeat;
+	background-image: url(images/jelly.jpg);
+	width: 740px;
+	float:left;
+}
+h1{
+font-weight:lighter;
+}
+
+.ranking{
+	border:1px dashed #999999;
+	margin:0px 4px;
+	float:left;
+	padding : 4px;
+	line-height:1.4em;
+}
+.ranking h2{
+	font-weight:lighter;
+	color: #FF6666;
+	font-size: small;
+	margin:0px;
+}
+.ranking h3{
+	font-weight:lighter;
+	color: green;
+	font-size: small;
+	margin:0px;
+	text-align:left;
+	padding:0px;
+}
+.ranking ol { font-size:small; color:#444;padding:0px 2em;text-align:left}
+.ranking li { font-size:small; color:#999;padding:0px;}
+#honbun{
+	text-align: left;
+	padding: 0px;
+	margin: 0px;
+}
+
+.about{
+font-size:0.9em;
+color:#000000;
+}
+
+#cr{
+	color:#757575;
+	font-size: small;
+	padding-top:40px;
+	padding-bottom: 10px;
+	text-align:center;
+}
+
+#cr a:visited,#cr a:link{
+	color: #757575;
+}
+#cr a:hover,#cr a:active{
+color:#000000;
+}
+
+.divclr{
+margin:0px;
+padding:0px;
+clear:both;
+}
+
+/* indexのメニュー部 */
+
+.profile_work{
+float:left;
+margin-left:18px;
+}
+.profile{
+	border:3px dotted #999999;
+margin-bottom:10px;
+width:210px;
+}
+.work{
+	border:3px dotted #999999;
+width:210px;
+}
+.products{
+float:left;
+	border:3px dotted #999999;
+margin-left:15px;
+width:210px;
+}
+.link_mail{
+float:left;
+margin-left:15px;
+}
+.link{
+	border:3px dotted #999999;
+margin-bottom:10px;
+width:210px;
+}
+.mail{
+	border:3px dotted #999999;
+width:210px;
+}
+
+.front_yajirusi{
+	margin-top: 8px;
+	margin-right: 4px;
+}
+
+.second_yajirusi{
+	margin-top: 2px;
+	margin-right: 14px;
+}
+.front_title{
+	padding-top: 10px;
+	padding-left: 34px;
+	color: #999999;
+	font-size: large;
+	text-decoration: none;
+}
+.front_title a:visited,front_title a:link{
+	color: #999999;
+	font-size: large;
+	text-decoration: none;
+}
+.front_title a:hover,.front_title a:active{
+	color: #999999;
+	font-size: large;
+	text-decoration: underline;
+}
+
+.di-menu-mini {
+  margin:6px 43px 0 57%;
+  background: rgba(238, 216, 181, 0.6); 
+  border-radius:2px;
+  
+}
+.di-menu-mini li a,
+.di-menu-mini li a:link
+{
+ color:#fff;
+}
+.di-menu-mini li a:hover, 
+.di-menu-mini li a:visited 
+ {
+  color:#e5ad65;
+}
+
+.mini a:visited, .mini, .mini a:link{
+	color: #999999;
+	font-size:small;
+	text-decoration: none;
+}
+
+.mini a:hover,.mini a:active{
+	color: #999999;
+	font-size:small;
+	text-decoration: underline;
+}
+.front_title ul, .di-menu-mini ul {
+  list-style:none;
+  padding:0px;
+  margin:0px;
+  vertical-align:middle;
+  line-height:1em;
+}
+.front_title li, .di-menu-mini li {
+  padding:0px;
+  margin:0px;
+  float:left;
+  vertical-align:middle;
+}
+.di-menu-mini li {
+padding:3px 1.5em;
+font-size:.85em;
+font-weight:lighter;
+}
+.actv{
+	text-decoration:overline underline;
+	font-weight:bold;
+}
+
+.second_title{
+	padding-top: 2px;
+	padding-left: 64px;
+	color: #999999;
+	font-size: large;
+	text-decoration: none;
+}
+.second_title a:visited,.second_title a:link{
+	color: #999999;
+	text-decoration: none;
+}
+.second_title a:hover,.second_title a:active{
+	color: #999999;
+	text-decoration: underline;
+}
+/* タイトルの更新履歴 */
+.whatsnew{
+padding:10px 0px 0px 20px;
+font-size:small;
+color:#CC9966;
+float:left;
+}
+
+.wn-gray{
+color:#999999;
+}
+
+/* コンテンツ・タイトル */
+#cont_include{
+	margin:20px 40px 0px 70px;
+	color: #666666;
+	line-height: 150%;
+	font-size:small;
+}
+
+#cont_title{
+border:1px dotted #999999;
+margin-bottom:10px;
+margin-left:40px;
+margin-right:40px;
+padding:8px;
+}
+#cont_include h2{
+margin-left:-30px;
+}
+
+.gototop{
+	text-align: right;
+	padding-right: 40px;
+	font-size: small;
+}
+
+a:link{
+color:#006699;
+}
+a:hover,a:active,a:visited{
+color:#993333;
+}
+
+/* タグにかけるcss */
+h3{
+font-size:medium;
+font-weight:bold;
+color:#666666;
+}
+
+hr{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.syousai .dl{
+font-size:6pt;
+}
